@@ -6,13 +6,12 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
 import cairosvg
 from vec import d, bounds
-import identity5 as I
+import identity6 as I
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "logos")
-DIRS = [("01", "01-ta-ring", "حلقة التاء"), ("02", "02-nameplate", "اللوحة"),
-        ("03", "03-ra", "را"), ("04", "04-six-by-six", "ستة بستة"),
-        ("05", "05-assembled-ra", "التركيب"), ("06", "06-seal", "ختم الراية"), ("07", "07-ascent", "الصعود")]
+DIRS = [("01", "01-steel-joint", "العقدة الفولاذية"), ("02", "02-frame", "الإطار"), ("03", "03-upright", "القائم"),
+        ("04", "04-portal", "البوابة"), ("05", "05-survey-point", "نقطة القياس")]
 SCHEMES = {
     "full": {"p": "#262E5D", "a": "#7D161A", "h": "#262E5D"},
     "mono": {"p": "#262E5D", "a": "#262E5D", "h": "#262E5D"},
@@ -79,12 +78,9 @@ def main():
               "لكل اتجاه مجلد فيه ثلاث صيغ: `svg` (قابل للتحرير في Illustrator)، `pdf` (Vector)، و`png` (شفاف، عرض 2400px).", "",
               "## التكوينات",
               "- `symbol`: الرمز المختصر.",
-              "- `primary_ar`: الشعار العربي الرئيسي.",
-              "- `ar_en`: العربي والإنكليزي.",
               "- `horizontal`: التكوين الأفقي.",
               "- `stacked`: التكوين العمودي.",
               "- `descriptor`: الأفقي مع وصف النشاط بالعربية والإنكليزية.",
-              "- `circular`: التكوين الدائري (الختم).",
               "- `word`: كلمة «الراية» وحدها.", "",
               "## النسخ اللونية",
               "- `full`: النيلي والماروني.",
@@ -92,7 +88,7 @@ def main():
               "- `black` / `white`.",
               "- `on-indigo`: للخلفية النيلية.",
               "- `production`: لون واحد للحفر والتطريز والختم البارز.", "",
-              "كل ملف SVG مقسّم إلى طبقات: `primary` و`accent` و`drawn-line`."]
+              "كل ملف SVG مقسّم إلى طبقات: `primary` و`accent`."]
     open(os.path.join(OUT, "README.md"), "w").write("\n".join(readme))
     print(count, "versions x (svg+pdf) + png")
 
