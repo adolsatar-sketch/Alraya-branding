@@ -28,9 +28,9 @@ D = [
     dict(n="04", name="ستة بستة",
          say="«الراية» و«ALRAYA» ستة أحرف في كل لغة، فوُضع الاسمان بالعرض نفسه فوق بعضهما. هوية بلغتين متكافئتين، مناسبة للمراسلات الرسمية والجهات الأجنبية.",
          apps=("letter", "folder"), wipe="both", min=40),
-    dict(n="05", name="الأداة",
-         say="الاسمان يبدآن بالأداة نفسها: «الـ» و«AL»، فتقابلت اللام العربية وحرف L على محور واحد. علامة تجمع اللغتين في أربعة أحرف.",
-         apps=("car", "insta"), wipe="meet", min=24),
+    dict(n="05", name="التركيب",
+         say="راءٌ مركّبة من قطعتين، جذع مستقيم وذيل منحنٍ، تلتقيان على خط واحد كما تُركَّب القطع في الموقع. العلامة عن دقة التنفيذ، وتبقى واضحة بلون واحد.",
+         apps=("vest", "board"), wipe="up", min=24, compare=True),
     dict(n="06", name="ختم الراية",
          say="ختم دائري هادئ: النشاط بالعربية أعلى الحلقة، وALRAYA أسفلها، والاسم في المركز. مناسب للوثائق والمخططات المعتمدة والمراسلات الرسمية.",
          apps=("letter", "folder"), wipe="seal", min=40),
@@ -49,7 +49,6 @@ EXTRAS = [  # (id, name, source)
     ("v2-03", "الطيّة", ("v2", "03")),
     ("v2-04", "الزاوية", ("v2", "04")),
     ("v2-05", "التعاشق", ("v2", "05")),
-    ("v1-02", "السارية", ("v1", "02")),
     ("v1-06", "نقطة الإسناد", ("v1", "06")),
 ]
 LK, DIMS = {}, {}
@@ -166,9 +165,21 @@ def chapter(x):
       <div class="pf-s fx">{use(n, "symbol", "full", "pf-i")}<span>النسخة المختصرة المعتمدة</span></div>
       <div class="sz fx" style="--dl:.06s"><p>بالمقاس الفعلي</p><div class="szs">{sizes}</div><p class="szn">أصغر مقاس اختُبر وبقي واضحاً: <bdi dir="ltr">{x["min"]}px</bdi></p></div>
     </div>
+    {compare_strip(x) if x.get("compare") else ""}
     <div class="ch-apps" data-r>{apps}</div>
   </div>
 </section>'''
+
+
+def compare_strip(x):
+    n = x["n"]
+    app = M.helmet(n, uid=f"cs{n}", sw=False)
+    return f'''<div class="cmp4" data-r>
+      <figure class="fx"><div class="c4">{use(n, "symbol", "full", "c4i")}</div><figcaption>العلامة وحدها</figcaption></figure>
+      <figure class="fx" style="--dl:.06s"><div class="c4">{use(n, "horizontal", "full", "c4l")}</div><figcaption>الاسم مع العلامة</figcaption></figure>
+      <figure class="fx" style="--dl:.12s"><div class="c4">{use(n, "horizontal", "black", "c4l")}</div><figcaption>لون واحد</figcaption></figure>
+      <figure class="fx" style="--dl:.18s"><div class="c4 c4a">{app}</div><figcaption>على الخوذة</figcaption></figure>
+    </div>'''
 
 
 def apps():

@@ -56,3 +56,16 @@
   .end{min-height:0}
   .op-marks{gap:12px}
 }
+
+.cmp4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cmp4 figure{margin:0}
+.c4{background:#fff;border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:12%}
+.c4a{padding:0;overflow:hidden;background:#E6E1D6}.c4a svg{width:100%;height:auto}
+.c4i{width:52%;height:100%}.c4l{width:100%;height:100%}
+.cmp4 figcaption{padding:7px 2px 0;font-size:13px;color:var(--mut)}
+@media (max-width:980px){.cmp4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .pin{padding:64px 0 84px}
+  .sc-art{max-height:34vh}
+  .sc-story{font-size:16px;line-height:1.6}
+}

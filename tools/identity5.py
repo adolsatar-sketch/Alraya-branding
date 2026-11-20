@@ -26,7 +26,7 @@ F = {
 }
 DESC_AR = "مقاولات عامة واستشارات هندسية"
 DESC_EN = "GENERAL CONTRACTING & ENGINEERING CONSULTANCY"
-NAMES = {"01": "حلقة التاء", "02": "اللوحة", "03": "را", "04": "ستة بستة", "05": "الأداة", "06": "ختم الراية"}
+NAMES = {"01": "حلقة التاء", "02": "اللوحة", "03": "را", "04": "ستة بستة", "05": "التركيب", "06": "ختم الراية"}
 
 
 def glyphs(s, font):
@@ -154,29 +154,18 @@ def sym04():
     return L((diff(tile, cut), "p"))
 
 
-# ------------------------------------------------------------------ 05 الأداة
-def sym05():
-    """«ال» and «AL»: both names begin with the same article. The Arabic lam
-    and the Latin L face each other across one axis."""
-    ar = glyphs("ال", "alex")
-    x0, y0, x1, y1 = bounds(ar)
-    H = y1 - y0
-    lat = caps("AL", EN, H * 0.74, 0.08)
-    lw, lh = size(lat)
-    ar = to_origin(ar)
-    aw, ah = size(ar)
-    gap = H * 0.16
-    # align baselines: Latin caps sit on the Arabic baseline
-    base = ah - (y1 - 0) if False else None
-    a0 = bounds(text("ا", F["alex"], 1000)[0])
-    k = H / 1000
-    lat = move(lat, 0, ah - lh - (y1 - 0) * 0)  # bottoms aligned
-    ar_b = bounds(ar)
-    lat = move(lat, 0, 0)
-    axis = rect(lw + gap / 2 - H * 0.012, -H * 0.10, H * 0.024, ah + H * 0.20)
-    ar = move(ar, lw + gap, 0)
-    # bottoms aligned to the Arabic baseline (alif foot)
-    return L((lat, "p"), (axis, "a"), (ar, "p"))
+# ------------------------------------------------------------------ 05 التركيب
+def sym05(u=100, seam=0.16):
+    """A ra assembled from two parts: a straight stem and a curved tail cut
+    from one ring of the same width, meeting on a single line.
+    Module u: stem 2u wide x 5u tall; tail = quarter ring, radii 2u..4u."""
+    w = 2 * u
+    stem = rect(3 * u, 0, w, 5 * u)
+    cx, cy, ro, ri = u, 5 * u, 4 * u, 2 * u
+    q = inter(diff(circle(cx, cy, ro), circle(cx, cy, ri)), rect(cx, cy, ro + 1, ro + 1))
+    g = seam * u
+    tail = move(q, 0, g)
+    return L((stem, "p"), (tail, "a"))
 
 
 # ------------------------------------------------------------------ 06 ختم الراية
@@ -262,11 +251,28 @@ def lockups(n):
         rule = [(rect(0, 0, sh * 0.006, sh * 0.56), "a")]
         out["horizontal"] = beside(beside(blk, rule, sh * 0.07), s, sh * 0.07)
         out["stacked"] = centre([s, blk], sh * 0.08)
+    elif n == "05":
+        # the stem stands as tall as the alif; the seam sits on the writing line
+        a = text("ا", F["alex"], 1000)[0]
+        A = -bounds(a)[1]
+        raw = word_layers("05")
+        k = 520 / lsize(raw)[1]
+        base = A * k
+        m = lorigin(sym05())
+        m = lmove(m, 0, 0, base / 500)
+        mw, mh = lsize(m)
+        e = [(en(wh * 0.12, 0.5), "p")]
+        blk = right_align([wd, e], wh * 0.16)
+        bw = lsize(blk)[0]
+        gap = wh * 0.24
+        out["horizontal"] = lorigin(blk + lmove(m, bw + gap, 0))
+        out["stacked"] = centre([lheight(sym, lsize(blk)[1] * 1.0), blk], lsize(blk)[1] * 0.16)
+        out["symbol"] = lheight(sym, 1000)
     else:
         e = [(en(wh * 0.12, 0.5), "p")]
         blk = right_align([wd, e], wh * 0.16)
         bh = lsize(blk)[1]
-        sh = {"01": 1.05, "03": 0.92, "05": 0.80}[n]
+        sh = {"01": 1.05, "03": 0.92, "05": 1.18}[n]
         out["horizontal"] = beside(blk, lheight(sym, bh * sh), bh * 0.24)
         out["stacked"] = centre([lheight(sym, bh * 1.1), blk], bh * 0.16)
         out["symbol"] = lheight(sym, 1000)

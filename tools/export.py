@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "logos")
 DIRS = [("01", "01-ta-ring", "حلقة التاء"), ("02", "02-nameplate", "اللوحة"),
         ("03", "03-ra", "را"), ("04", "04-six-by-six", "ستة بستة"),
-        ("05", "05-article", "الأداة"), ("06", "06-seal", "ختم الراية")]
+        ("05", "05-assembled-ra", "التركيب"), ("06", "06-seal", "ختم الراية")]
 SCHEMES = {
     "full": {"p": "#262E5D", "a": "#7D161A", "h": "#262E5D"},
     "mono": {"p": "#262E5D", "a": "#262E5D", "h": "#262E5D"},
