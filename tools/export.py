@@ -6,13 +6,13 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
 import cairosvg
 from vec import d, bounds
-import identity4 as I
+import identity5 as I
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "logos")
-DIRS = [("01", "01-mass-and-void", "الكتلة والفراغ"), ("02", "02-drawn-line", "الخط المرسوم"),
-        ("03", "03-meeting-point", "الملتقى"), ("04", "04-ending", "الخاتمة"),
-        ("05", "05-geometric-kufic", "الكوفي الهندسي"), ("06", "06-seal", "ختم الراية")]
+DIRS = [("01", "01-ta-ring", "حلقة التاء"), ("02", "02-nameplate", "اللوحة"),
+        ("03", "03-ra", "را"), ("04", "04-six-by-six", "ستة بستة"),
+        ("05", "05-article", "الأداة"), ("06", "06-seal", "ختم الراية")]
 SCHEMES = {
     "full": {"p": "#262E5D", "a": "#7D161A", "h": "#262E5D"},
     "mono": {"p": "#262E5D", "a": "#262E5D", "h": "#262E5D"},

@@ -104,7 +104,7 @@ def vest(d, uid="vs", sw=True):
         p += f'C{cx + 42},{top + 24} {cx - 42},{top + 24} {cx - 72},{top} Z' if back else f'L{cx + 10},{top + 262} L{cx - 10},{top + 262} Z'
         return p
     b = defs(uid) + bg(uid, "#EAE6DE", "#D8D1C5")
-    b += f'<pattern id="mesh{uid}" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="{Y}"/><circle cx="3.5" cy="3.5" r="1.3" fill="{Yd}" opacity=".45"/></pattern>'
+    b += f'<linearGradient id="mesh{uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2E84A"/><stop offset="1" stop-color="{Y}"/></linearGradient>'
     for i, (cx, back) in enumerate(((330, False), (870, True))):
         top = 80
         sp = shape(cx, top, back)
@@ -139,7 +139,7 @@ def vest(d, uid="vs", sw=True):
 # ------------------------------------------------------------------ 3 notebook & pen
 def desk(d, uid="dk", sw=True):
     b = defs(uid) + bg(uid, "#C9C1B2", "#B7AE9E")
-    b += f'<rect width="1200" height="800" fill="#fff" opacity=".04" filter="url(#gr{uid})"/>'
+    b += f''
     # notebook
     b += f'<g filter="url(#sh{uid})" transform="rotate(-6 380 400)"><rect x="170" y="120" width="420" height="580" rx="14" fill="{IND}"/>'
     b += f'<rect x="170" y="120" width="420" height="580" rx="14" fill="url(#fl{uid})"/>'
@@ -164,7 +164,6 @@ def letterhead(d, uid="lh", sw=True):
     b = defs(uid) + bg(uid, "#D9D3C7", "#C9C1B3")
     x, y, w, h = 330, 50, 540, 764
     b += f'<g filter="url(#sh{uid})"><rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#FFFFFF"/></g>'
-    b += f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#fff" filter="url(#gr{uid})"/>'
     b += logo(d, "horizontal", x + w - 50 - 200, y + 46, 200, 92, "full", "r", sw)
     b += f'<rect x="{x + 50}" y="{y + 168}" width="{w - 100}" height="1.6" fill="{MAR}"/>'
     b += field(x + w - 50, y + 214, "التاريخ", 150, 13) + field(x + w - 50, y + 250, "المرجع", 150, 13) + field(x + w - 50, y + 286, "الموضوع", 260, 13)
@@ -208,7 +207,6 @@ def folder(d, uid="fd", sw=True):
 def card(d, uid="cd", sw=True):
     b = defs(uid) + bg(uid, "#2A3160", "#1B2046")
     b += f'<g filter="url(#sh{uid})" transform="rotate(-7 420 330)"><rect x="160" y="180" width="520" height="300" rx="8" fill="{IVO}"/>'
-    b += f'<rect x="160" y="180" width="520" height="300" rx="8" fill="#fff" filter="url(#gr{uid})" opacity=".6"/>'
     b += logo(d, "stacked", 300, 220, 240, 220, "full", "c", sw) + "</g>"
     b += f'<g filter="url(#sh{uid})" transform="rotate(5 800 520)"><rect x="560" y="400" width="520" height="300" rx="8" fill="{IVO}"/>'
     r = 1040

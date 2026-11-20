@@ -1,0 +1,58 @@
+/* ---- v5: tighter rhythm, captions under images ---- */
+.sec{padding-top:clamp(48px,8vh,88px)}
+.sec-h{margin-bottom:clamp(18px,3vh,30px)}
+.scene{height:190vh}
+.pin{padding:clamp(64px,10vh,96px) 0 clamp(28px,5vh,48px)}
+.sc-art{max-height:54vh}
+.sc-story{font-size:clamp(17px,1.8vw,24px);max-width:30em}
+.after{gap:10px;padding-bottom:clamp(28px,5vh,56px)}
+.proof{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pf{aspect-ratio:16/10;padding:9%}
+.pf-k{background:#fff}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px}
+.pf-s{background:#fff;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:22px}
+.pf-s .pf-i{width:110px;height:110px}
+.pf-s span{font-size:12.5px;color:var(--mut)}
+.op-1,.op-2,.op-3{position:relative}
+.op-marks{display:flex;gap:clamp(14px,3vw,34px);justify-content:center;margin-top:clamp(26px,5vh,46px);opacity:1}
+.op-marks span{width:clamp(34px,6vw,64px);height:clamp(34px,6vw,64px);display:block}
+.op-marks svg{width:100%;height:100%}
+.js .open .op-marks span{opacity:0;transform:translateY(10px)}
+.js .open.go .op-marks span{animation:fin .9s var(--ease) both;animation-delay:calc(3.2s + var(--i) * .14s)}
+.js .open.go .op-marks{animation:none;opacity:1}
+.js .open.go .op-sig{animation-delay:4.4s}
+.riseY{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--q));opacity:var(--q)}
+/* captions sit under the image, never on it */
+.ca,.ap{background:none;border-radius:0;overflow:visible;margin:0}
+.mk-w{border-radius:4px;overflow:hidden;background:#E6E1D6}
+.ca figcaption,.ap figcaption{position:static;background:none;padding:8px 2px 0;font-size:13px;color:var(--mut)}
+.ap-g{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 12px}
+.ap.w2{grid-column:auto}
+/* additional options */
+.xo-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.xo{margin:0}
+.xo-w{background:#fff;border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:12%}
+.xo-w img{width:100%;height:100%;object-fit:contain}
+.xo figcaption{display:flex;justify-content:space-between;align-items:baseline;padding:8px 2px 0;font-size:13.5px}
+.xo figcaption b{font-weight:600;color:var(--ink)}
+.xo figcaption a{font-family:"PlexMono",monospace;font-size:11px;color:var(--mar);text-decoration:none;letter-spacing:.08em}
+.rec{margin-top:clamp(48px,8vh,90px);padding:clamp(56px,9vh,90px) 0}
+.end{min-height:56vh;margin-top:clamp(40px,7vh,80px)}
+.mbar{transition:transform .35s var(--ease)}
+.mbar.away{transform:translateY(calc(100% + 30px))}
+@media (max-width:980px){.ap-g{grid-template-columns:repeat(2,minmax(0,1fr))}.xo-g{grid-template-columns:repeat(3,minmax(0,1fr))}.row2{grid-template-columns:minmax(0,1fr)}.proof{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.proof .pf-k{display:none}}
+@media (max-width:640px){
+  body{padding-bottom:70px}
+  .scene{height:150vh}
+  .pin{padding:70px 0 40px;grid-template-rows:auto minmax(0,1fr) auto}
+  .sc-art{max-height:42vh}
+  .sec{padding-top:44px}
+  .pf{aspect-ratio:4/3;padding:8%}
+  .ap-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 10px}
+  .ca figcaption,.ap figcaption{font-size:12px;padding-top:6px}
+  .ch-apps{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .xo-g{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .lu-c{aspect-ratio:3/2}
+  .end{min-height:0}
+  .op-marks{gap:12px}
+}
