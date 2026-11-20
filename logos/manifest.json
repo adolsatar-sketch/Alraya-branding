@@ -220,5 +220,41 @@
    "alraya-06-descriptor-on-indigo",
    "alraya-06-descriptor-production"
   ]
+ },
+ "07": {
+  "slug": "07-ascent",
+  "name": "الصعود",
+  "files": [
+   "alraya-07-word-full",
+   "alraya-07-word-mono",
+   "alraya-07-word-black",
+   "alraya-07-word-white",
+   "alraya-07-word-on-indigo",
+   "alraya-07-word-production",
+   "alraya-07-horizontal-full",
+   "alraya-07-horizontal-mono",
+   "alraya-07-horizontal-black",
+   "alraya-07-horizontal-white",
+   "alraya-07-horizontal-on-indigo",
+   "alraya-07-horizontal-production",
+   "alraya-07-stacked-full",
+   "alraya-07-stacked-mono",
+   "alraya-07-stacked-black",
+   "alraya-07-stacked-white",
+   "alraya-07-stacked-on-indigo",
+   "alraya-07-stacked-production",
+   "alraya-07-symbol-full",
+   "alraya-07-symbol-mono",
+   "alraya-07-symbol-black",
+   "alraya-07-symbol-white",
+   "alraya-07-symbol-on-indigo",
+   "alraya-07-symbol-production",
+   "alraya-07-descriptor-full",
+   "alraya-07-descriptor-mono",
+   "alraya-07-descriptor-black",
+   "alraya-07-descriptor-white",
+   "alraya-07-descriptor-on-indigo",
+   "alraya-07-descriptor-production"
+  ]
  }
 }

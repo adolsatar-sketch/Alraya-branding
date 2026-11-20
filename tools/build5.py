@@ -34,9 +34,12 @@ D = [
     dict(n="06", name="ختم الراية",
          say="ختم دائري هادئ: النشاط بالعربية أعلى الحلقة، وALRAYA أسفلها، والاسم في المركز. مناسب للوثائق والمخططات المعتمدة والمراسلات الرسمية.",
          apps=("letter", "folder"), wipe="seal", min=40),
+    dict(n="07", name="الصعود",
+         say="حلقة التاء مبنية من مداميك تصعد حولها، وفي فراغها برجٌ متدرج. البناء يرتفع طبقةً فوق طبقة على أساس ثابت، والعلامة تبقى واضحة بلون واحد.",
+         apps=("facade", "vest"), wipe="ascent", min=40, hero=True),
 ]
 BY = {x["n"]: x for x in D}
-REC = [("01", "أقوى رمز بين الستة بالحجم الصغير وبلون واحد، والحرف فيه من اسم الشركة نفسه."),
+REC = [("01", "أقوى رمز بين السبعة بالحجم الصغير وبلون واحد، والحرف فيه من اسم الشركة نفسه."),
        ("06", "يلبّي ميل العميل إلى الشعار الدائري المؤسسي، ويصلح ختماً رسمياً على الوثائق والمخططات.")]
 APPS = ("helmet", "vest", "desk", "letter", "folder", "board", "car", "avatar", "insta")
 APPS_DEFAULT = "01"
@@ -103,6 +106,9 @@ def scene(x):
     if mode == "up":
         art += clip(f"k{n}", "up", .06, .46) + f'<g clip-path="url(#k{n})">{paths(P)}</g>'
         art += f'<g class="fill drop" style="--s:.44;--e:.58">{paths(A)}</g>'
+    elif mode == "ascent":
+        art += clip(f"k{n}", "up", .06, .5) + f'<g clip-path="url(#k{n})">{paths(P)}</g>'
+        art += f'<g class="fill riseY" style="--s:.30;--e:.54">{paths(A)}</g>'
     elif mode == "rtl":
         art += clip(f"k{n}", "rtl", .06, .5) + f'<g clip-path="url(#k{n})">{paths(P)}</g>'
         art += f'<g class="fill grow" style="--s:.46;--e:.58">{paths(A)}</g>'
@@ -126,7 +132,7 @@ def opening():
     return f'''<header class="open" id="top" data-nav="البداية">
   <p class="op-1">قبل أن يُبنى المشروع… تُبنى الفكرة.</p>
   <h1 class="op-2">الراية</h1>
-  <p class="op-3">ستة اتجاهات لهوية شركة مقاولات عامة واستشارات هندسية.</p>
+  <p class="op-3">سبعة خيارات لهوية شركة مقاولات عامة واستشارات هندسية.</p>
   <div class="op-marks" aria-hidden="true">{marks}</div>
   <p class="op-sig"><span>هوية بصرية وتصميم</span><b>عَدول</b><i dir="ltr">Adol</i></p>
 </header>'''
@@ -135,8 +141,8 @@ def opening():
 def board():
     cells = "".join(f'<a class="lu-c fx" style="--dl:{i * .05:.2f}s" href="#d{x["n"]}">{use(x["n"], "horizontal", "black", "lu-l", x["name"])}'
                     f'<span><i dir="ltr">{x["n"]}</i>{x["name"]}</span></a>' for i, x in enumerate(D))
-    return f'''<section class="lineup sec" id="board" data-nav="الخيارات الستة" data-r>
-  <div class="sec-h"><h2 class="fx">الخيارات الستة</h2><p class="sub fx" style="--dl:.06s">بالأسود، وبالحجم نفسه، وعلى الخلفية نفسها.</p></div>
+    return f'''<section class="lineup sec" id="board" data-nav="الخيارات" data-r>
+  <div class="sec-h"><h2 class="fx">الخيارات السبعة</h2><p class="sub fx" style="--dl:.06s">بالأسود، وبالحجم نفسه، وعلى الخلفية نفسها.</p></div>
   <div class="lu-g">{cells}</div>
 </section>'''
 
@@ -150,7 +156,7 @@ def chapter(x):
     return f'''<section class="chap d{n}" id="d{n}" data-nav="{n} · {x["name"]}">
   <div class="scene" data-scene>
     <div class="pin">
-      <div class="sc-h"><span class="sc-n" dir="ltr">{n}<i>/06</i></span><h2>{x["name"]}</h2></div>
+      <div class="sc-h"><span class="sc-n" dir="ltr">{n}<i>/{len(D):02d}</i></span><h2>{x["name"]}</h2></div>
       {scene(x)}
       <p class="sc-story">{x["say"]}</p>
     </div>
@@ -166,9 +172,41 @@ def chapter(x):
       <div class="sz fx" style="--dl:.06s"><p>بالمقاس الفعلي</p><div class="szs">{sizes}</div><p class="szn">أصغر مقاس اختُبر وبقي واضحاً: <bdi dir="ltr">{x["min"]}px</bdi></p></div>
     </div>
     {compare_strip(x) if x.get("compare") else ""}
+    {hero(x) if x.get("hero") else ""}
     <div class="ch-apps" data-r>{apps}</div>
   </div>
 </section>'''
+
+
+def hero(x):
+    """A presentation scene for the mark: the flat logo stood up as a
+    monument at dusk. Depth lives here, not in the logo."""
+    n = x["n"]
+    lay = I.lorigin(LK[n]["symbol"])
+    w, h = I.lsize(lay)
+    k = 420 / h
+    ox, oy = 600 - w * k / 2, 532 - h * k
+    P = "".join(pd(p, 0) for p, r in lay if r == "p")
+    A = "".join(pd(p, 0) for p, r in lay if r == "a")
+    depth = ""
+    for i in range(18, 0, -1):
+        dx, dy = i * 1.6, i * 0.9
+        depth += f'<g transform="translate({ox + dx:.1f} {oy + dy:.1f}) scale({k:.4f})"><path fill="#141936" d="{P}"/><path fill="#4A0C0F" d="{A}"/></g>'
+    face = (f'<g transform="translate({ox:.1f} {oy:.1f}) scale({k:.4f})"><path fill="url(#hf)" d="{P}"/><path fill="url(#ha)" d="{A}"/></g>')
+    lines = "".join(f'<line x1="{600 + (i - 6) * 160}" y1="520" x2="{600 + (i - 6) * 520}" y2="760" stroke="#fff" stroke-opacity=".06"/>' for i in range(13))
+    svg = f'''<svg viewBox="0 0 1200 720" role="img" aria-label="العلامة في مشهد معماري">
+<defs><linearGradient id="hs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151A3D"/><stop offset=".62" stop-color="#3A3F6A"/><stop offset="1" stop-color="#C9A98C"/></linearGradient>
+<linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2E50"/><stop offset="1" stop-color="#11142B"/></linearGradient>
+<linearGradient id="hf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B4580"/><stop offset="1" stop-color="#262E5D"/></linearGradient>
+<linearGradient id="ha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A3262B"/><stop offset="1" stop-color="#7D161A"/></linearGradient>
+<radialGradient id="hglow" cx="50%" cy="72%" r="40%"><stop offset="0" stop-color="#E8C9A6" stop-opacity=".55"/><stop offset="1" stop-color="#E8C9A6" stop-opacity="0"/></radialGradient>
+<filter id="hblur"><feGaussianBlur stdDeviation="14"/></filter></defs>
+<rect width="1200" height="720" fill="url(#hs)"/><rect width="1200" height="720" fill="url(#hglow)"/>
+<rect y="520" width="1200" height="200" fill="url(#hg)"/>{lines}
+<ellipse cx="628" cy="540" rx="250" ry="18" fill="#000" opacity=".45" filter="url(#hblur)"/>
+<g class="hero-m">{depth}{face}</g>
+</svg>'''
+    return f'<figure class="hero fx" data-r>{svg}<figcaption>العلامة كما تُعرض: الشعار مسطّح، والعمق للمشهد فقط.</figcaption></figure>'
 
 
 def compare_strip(x):
@@ -246,7 +284,7 @@ def ending():
 
 
 def nav():
-    items = [("top", "البداية"), ("board", "الخيارات الستة")] + [(f"d{x['n']}", f"{x['n']} · {x['name']}") for x in D] + \
+    items = [("top", "البداية"), ("board", "الخيارات")] + [(f"d{x['n']}", f"{x['n']} · {x['name']}") for x in D] + \
             [("apps", "التطبيقات"), ("rec", "التوصية"), ("extra", "خيارات إضافية"), ("end", "الخاتمة")]
     links = "".join(f'<a href="#{i}"><i></i><span>{t}</span></a>' for i, t in items)
     return (f'<nav class="nav" aria-label="أقسام العرض">{links}</nav>'
@@ -268,8 +306,8 @@ def build():
     visible = re.sub(r"<[^>]+>", " ", body) + "ALRAYA·—–«»،؛؟0123456789px/×±%:.()@°SVG"
     html = ('<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1B2046">'
-            '<title>الراية — ستة خيارات للهوية</title>'
-            '<meta name="description" content="ستة خيارات لشعار الراية للمقاولات العامة والاستشارات الهندسية. هوية بصرية وتصميم: عَدول.">'
+            '<title>الراية — سبعة خيارات للهوية</title>'
+            '<meta name="description" content="سبعة خيارات لشعار الراية للمقاولات العامة والاستشارات الهندسية. هوية بصرية وتصميم: عَدول.">'
             f'<style>{font_css(set(visible))}{css}</style></head><body>{sprite_svg}{body}<script>{js}</script></body></html>')
     open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(html)
     print(f"index.html {len(html) / 1024:.0f} KB")

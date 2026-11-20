@@ -7,7 +7,7 @@ taken from the same typefaces, so a mark and its word always match.
 
 Layers: (path, role) — 'p' indigo, 'a' maroon.
 """
-from vec import (P, rect, rrect, circle, diamond, poly, union, diff, inter, stroke, move, scale,
+from vec import (P, rect, rrect, circle, ellipse, diamond, poly, union, diff, inter, stroke, move, scale,
                  bounds, text, caps, to_origin, size)
 from identity import (L, lb, lsize, lmove, lorigin, lheight, lwidth, right_align, centre, beside,
                       arc_map, EN, EN_SB)
@@ -21,12 +21,13 @@ F = {
     "tajawal": "tajawal-arabic-800-normal.woff2",
     "alex": "alexandria-arabic-800-normal.woff2",
     "amiri": "amiri-arabic-700-normal.woff2",
+    "messiri": "el-messiri-arabic-700-normal.woff2",
     "plex": "ibm-plex-sans-arabic-arabic-700-normal.woff2",
     "plexm": "ibm-plex-sans-arabic-arabic-500-normal.woff2",
 }
 DESC_AR = "مقاولات عامة واستشارات هندسية"
 DESC_EN = "GENERAL CONTRACTING & ENGINEERING CONSULTANCY"
-NAMES = {"01": "حلقة التاء", "02": "اللوحة", "03": "را", "04": "ستة بستة", "05": "التركيب", "06": "ختم الراية"}
+NAMES = {"01": "حلقة التاء", "02": "اللوحة", "03": "را", "04": "ستة بستة", "05": "التركيب", "06": "ختم الراية", "07": "الصعود"}
 
 
 def glyphs(s, font):
@@ -201,9 +202,34 @@ def seal06(R=500, lettered=True):
     return L((union(*parts, w), "p"), (union(*acc), "a"))
 
 
-SYM = {"01": sym01, "02": sym02, "03": sym03, "04": lambda: block04(), "05": sym05, "06": lambda: seal06()}
+# ------------------------------------------------------------------ 07 الصعود
+def _arch_free_parts(gap=22):
+    outer = ellipse(480, 615, 330, 360)
+    hole = ellipse(480, 648, 192, 206)
+    body = diff(outer, hole)
+    seams = [P().M(100, y).C(330, y - 12, 620, y - 70, 880, y - 150).path() for y in (870, 700, 530)]
+    body = diff(body, *[stroke(s, gap) for s in seams])
+    cx, y = 480, 800
+    t = []
+    for w, h in ((124, 92), (90, 88), (58, 80), (28, 58)):
+        t.append(rect(cx - w / 2, y - h, w, h)); y -= h + 12
+    frame = ellipse(480, 648, 180, 194)
+    tower = union(inter(union(*t), frame), inter(rect(260, 800, 440, 22), frame))
+    d, g = 96, 32
+    dots = union(rect(cx - g / 2 - d, 110, d, d), rect(cx + g / 2, 110, d, d))
+    return body, tower, dots
+
+
+def sym07():
+    """The loop of ta marbuta built as four courses that climb around it,
+    with a stepped tower framed in its counter and two square dots above."""
+    body, tower, dots = _arch_free_parts()
+    return L((body, "p"), (dots, "p"), (tower, "a"))
+
+
+SYM = {"07": sym07, "01": sym01, "02": sym02, "03": sym03, "04": lambda: block04(), "05": sym05, "06": lambda: seal06()}
 WORD = {"01": ("kufam", (0.07, 0.06, 0.06)), "02": ("nkufi", (0.075, 0.07, 0.065)), "03": ("changa", (0.06, 0.055, 0.05)),
-        "04": ("tajawal", (0.07, 0.065, 0.06)), "05": ("alex", (0.07, 0.06, 0.06)), "06": ("amiri", (0.05, 0.05, 0.04))}
+        "04": ("tajawal", (0.07, 0.065, 0.06)), "05": ("alex", (0.07, 0.06, 0.06)), "06": ("amiri", (0.05, 0.05, 0.04)), "07": ("messiri", (0.07, 0.06, 0.06))}
 
 
 def word_layers(n):
@@ -272,7 +298,7 @@ def lockups(n):
         e = [(en(wh * 0.12, 0.5), "p")]
         blk = right_align([wd, e], wh * 0.16)
         bh = lsize(blk)[1]
-        sh = {"01": 1.05, "03": 0.92, "05": 1.18}[n]
+        sh = {"01": 1.05, "03": 0.92, "05": 1.18, "07": 1.15}[n]
         out["horizontal"] = beside(blk, lheight(sym, bh * sh), bh * 0.24)
         out["stacked"] = centre([lheight(sym, bh * 1.1), blk], bh * 0.16)
         out["symbol"] = lheight(sym, 1000)

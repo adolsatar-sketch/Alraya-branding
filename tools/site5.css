@@ -69,3 +69,10 @@
   .sc-art{max-height:34vh}
   .sc-story{font-size:16px;line-height:1.6}
 }
+
+.hero{margin:0}.hero svg{width:100%;height:auto;border-radius:4px;display:block}
+.hero figcaption{padding:8px 2px 0;font-size:13px;color:var(--mut)}
+.js .hero:not(.in) .hero-m{opacity:0;transform:translateY(24px)}
+.hero-m{transition:opacity 1.2s var(--ease),transform 1.4s var(--ease)}
+#board .lu-g{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:980px){#board .lu-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
