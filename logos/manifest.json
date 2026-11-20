@@ -1,7 +1,7 @@
 {
  "01": {
-  "slug": "01-al-uqda",
-  "name": "العقدة",
+  "slug": "01-mass-and-void",
+  "name": "الكتلة والفراغ",
   "files": [
    "alraya-01-symbol-full",
    "alraya-01-symbol-mono",
@@ -38,12 +38,18 @@
    "alraya-01-descriptor-black",
    "alraya-01-descriptor-white",
    "alraya-01-descriptor-on-indigo",
-   "alraya-01-descriptor-production"
+   "alraya-01-descriptor-production",
+   "alraya-01-word-full",
+   "alraya-01-word-mono",
+   "alraya-01-word-black",
+   "alraya-01-word-white",
+   "alraya-01-word-on-indigo",
+   "alraya-01-word-production"
   ]
  },
  "02": {
-  "slug": "02-line-to-mass",
-  "name": "من الخط إلى الكتلة",
+  "slug": "02-drawn-line",
+  "name": "الخط المرسوم",
   "files": [
    "alraya-02-symbol-full",
    "alraya-02-symbol-mono",
@@ -62,26 +68,36 @@
    "alraya-02-ar_en-black",
    "alraya-02-ar_en-white",
    "alraya-02-ar_en-on-indigo",
+   "alraya-02-ar_en-production",
    "alraya-02-horizontal-full",
    "alraya-02-horizontal-mono",
    "alraya-02-horizontal-black",
    "alraya-02-horizontal-white",
    "alraya-02-horizontal-on-indigo",
+   "alraya-02-horizontal-production",
    "alraya-02-stacked-full",
    "alraya-02-stacked-mono",
    "alraya-02-stacked-black",
    "alraya-02-stacked-white",
    "alraya-02-stacked-on-indigo",
+   "alraya-02-stacked-production",
    "alraya-02-descriptor-full",
    "alraya-02-descriptor-mono",
    "alraya-02-descriptor-black",
    "alraya-02-descriptor-white",
-   "alraya-02-descriptor-on-indigo"
+   "alraya-02-descriptor-on-indigo",
+   "alraya-02-descriptor-production",
+   "alraya-02-word-full",
+   "alraya-02-word-mono",
+   "alraya-02-word-black",
+   "alraya-02-word-white",
+   "alraya-02-word-on-indigo",
+   "alraya-02-word-production"
   ]
  },
  "03": {
-  "slug": "03-bearing-void",
-  "name": "الفراغ الحامل",
+  "slug": "03-meeting-point",
+  "name": "الملتقى",
   "files": [
    "alraya-03-symbol-full",
    "alraya-03-symbol-mono",
@@ -118,12 +134,18 @@
    "alraya-03-descriptor-black",
    "alraya-03-descriptor-white",
    "alraya-03-descriptor-on-indigo",
-   "alraya-03-descriptor-production"
+   "alraya-03-descriptor-production",
+   "alraya-03-word-full",
+   "alraya-03-word-mono",
+   "alraya-03-word-black",
+   "alraya-03-word-white",
+   "alraya-03-word-on-indigo",
+   "alraya-03-word-production"
   ]
  },
  "04": {
-  "slug": "04-signature",
-  "name": "التوقيع العربي",
+  "slug": "04-ending",
+  "name": "الخاتمة",
   "files": [
    "alraya-04-symbol-full",
    "alraya-04-symbol-mono",
@@ -160,12 +182,18 @@
    "alraya-04-descriptor-black",
    "alraya-04-descriptor-white",
    "alraya-04-descriptor-on-indigo",
-   "alraya-04-descriptor-production"
+   "alraya-04-descriptor-production",
+   "alraya-04-word-full",
+   "alraya-04-word-mono",
+   "alraya-04-word-black",
+   "alraya-04-word-white",
+   "alraya-04-word-on-indigo",
+   "alraya-04-word-production"
   ]
  },
  "05": {
-  "slug": "05-turning-point",
-  "name": "نقطة التحول",
+  "slug": "05-geometric-kufic",
+  "name": "الكوفي الهندسي",
   "files": [
    "alraya-05-symbol-full",
    "alraya-05-symbol-mono",
@@ -202,7 +230,13 @@
    "alraya-05-descriptor-black",
    "alraya-05-descriptor-white",
    "alraya-05-descriptor-on-indigo",
-   "alraya-05-descriptor-production"
+   "alraya-05-descriptor-production",
+   "alraya-05-word-full",
+   "alraya-05-word-mono",
+   "alraya-05-word-black",
+   "alraya-05-word-white",
+   "alraya-05-word-on-indigo",
+   "alraya-05-word-production"
   ]
  },
  "06": {
@@ -215,6 +249,12 @@
    "alraya-06-symbol-white",
    "alraya-06-symbol-on-indigo",
    "alraya-06-symbol-production",
+   "alraya-06-primary_ar-full",
+   "alraya-06-primary_ar-mono",
+   "alraya-06-primary_ar-black",
+   "alraya-06-primary_ar-white",
+   "alraya-06-primary_ar-on-indigo",
+   "alraya-06-primary_ar-production",
    "alraya-06-circular-full",
    "alraya-06-circular-mono",
    "alraya-06-circular-black",
@@ -227,12 +267,6 @@
    "alraya-06-horizontal-white",
    "alraya-06-horizontal-on-indigo",
    "alraya-06-horizontal-production",
-   "alraya-06-primary_ar-full",
-   "alraya-06-primary_ar-mono",
-   "alraya-06-primary_ar-black",
-   "alraya-06-primary_ar-white",
-   "alraya-06-primary_ar-on-indigo",
-   "alraya-06-primary_ar-production",
    "alraya-06-ar_en-full",
    "alraya-06-ar_en-mono",
    "alraya-06-ar_en-black",
@@ -250,7 +284,13 @@
    "alraya-06-descriptor-black",
    "alraya-06-descriptor-white",
    "alraya-06-descriptor-on-indigo",
-   "alraya-06-descriptor-production"
+   "alraya-06-descriptor-production",
+   "alraya-06-word-full",
+   "alraya-06-word-mono",
+   "alraya-06-word-black",
+   "alraya-06-word-white",
+   "alraya-06-word-on-indigo",
+   "alraya-06-word-production"
   ]
  }
 }

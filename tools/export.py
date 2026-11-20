@@ -6,13 +6,13 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
 import cairosvg
 from vec import d, bounds
-import identity as I
+import identity4 as I
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "logos")
-DIRS = [("01", "01-al-uqda", "العقدة"), ("02", "02-line-to-mass", "من الخط إلى الكتلة"),
-        ("03", "03-bearing-void", "الفراغ الحامل"), ("04", "04-signature", "التوقيع العربي"),
-        ("05", "05-turning-point", "نقطة التحول"), ("06", "06-seal", "ختم الراية")]
+DIRS = [("01", "01-mass-and-void", "الكتلة والفراغ"), ("02", "02-drawn-line", "الخط المرسوم"),
+        ("03", "03-meeting-point", "الملتقى"), ("04", "04-ending", "الخاتمة"),
+        ("05", "05-geometric-kufic", "الكوفي الهندسي"), ("06", "06-seal", "ختم الراية")]
 SCHEMES = {
     "full": {"p": "#262E5D", "a": "#7D161A", "h": "#262E5D"},
     "mono": {"p": "#262E5D", "a": "#262E5D", "h": "#262E5D"},
@@ -35,8 +35,8 @@ def svg_doc(layers, colors, title, pad=0.0):
     body = ""
     for role in ("p", "h", "a"):
         if role in groups:
-            ds = "".join(d(q, 1) for q in groups[role])
-            body += f'<g id="{ROLE_NAME[role]}"><path fill="{colors[role]}" d="{ds}"/></g>'
+            ps = "".join(f'<path fill="{colors[role]}" d="{d(q, 1)}"/>' for q in groups[role])
+            body += f'<g id="{ROLE_NAME[role]}">{ps}</g>'
     vb = f"{x0 - p:.1f} {y0 - p:.1f} {w + 2 * p:.1f} {h + 2 * p:.1f}"
     return (f'<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb}" '
             f'width="{w + 2 * p:.0f}" height="{h + 2 * p:.0f}"><title>{title}</title>{body}</svg>\n'), w, h
@@ -54,7 +54,7 @@ def main():
         for kind, layers in lk.items():
             for sch, colors in SCHEMES.items():
                 use = layers
-                if sch == "production":
+                if sch == "production" and False:
                     if n == "02":
                         # the drawn hairline cannot be embroidered or engraved:
                         # production uses the fully built letters
@@ -84,13 +84,14 @@ def main():
               "- `horizontal`: التكوين الأفقي.",
               "- `stacked`: التكوين العمودي.",
               "- `descriptor`: الأفقي مع وصف النشاط بالعربية والإنكليزية.",
-              "- `circular`: التكوين الدائري (الختم).", "",
+              "- `circular`: التكوين الدائري (الختم).",
+              "- `word`: كلمة «الراية» وحدها.", "",
               "## النسخ اللونية",
               "- `full`: النيلي والماروني.",
               "- `mono`: لون واحد (نيلي).",
               "- `black` / `white`.",
               "- `on-indigo`: للخلفية النيلية.",
-              "- `production`: لون واحد للحفر والتطريز والختم البارز. في الاتجاه 02 تُستخدم الحروف المبنية كاملة لأن الخط الرفيع لا يُطرَّز.", "",
+              "- `production`: لون واحد للحفر والتطريز والختم البارز.", "",
               "كل ملف SVG مقسّم إلى طبقات: `primary` و`accent` و`drawn-line`."]
     open(os.path.join(OUT, "README.md"), "w").write("\n".join(readme))
     print(count, "versions x (svg+pdf) + png")

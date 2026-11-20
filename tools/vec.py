@@ -233,10 +233,95 @@ def segments(path):
             yield "Z", []
 
 
+def _contour_segs(path):
+    """List of contours, each a list of (start, cmd, pts)."""
+    res, cur, start, pen = [], None, None, None
+    for cmd, pts in segments(path):
+        p = [(q.x(), q.y()) for q in pts]
+        if cmd == "M":
+            if cur:
+                res.append((start, cur))
+            cur, start, pen = [], p[0], p[0]
+        elif cmd == "Z":
+            if cur is not None:
+                res.append((start, cur))
+            cur = None
+        else:
+            cur.append((pen, cmd, p))
+            pen = p[-1]
+    if cur:
+        res.append((start, cur))
+    return res
+
+
+def _area(segs):
+    a = 0
+    for p0, cmd, p in segs:
+        q = [p0] + p
+        for i in range(1, len(q)):
+            a += q[i - 1][0] * q[i][1] - q[i][0] * q[i - 1][1]
+    return a / 2
+
+
+def _reverse(start, segs):
+    out = []
+    for p0, cmd, p in reversed(segs):
+        end = p[-1]
+        if cmd == "L":
+            out.append((end, "L", [p0]))
+        elif cmd == "Q":
+            out.append((end, "Q", [p[0], p0]))
+        else:
+            out.append((end, "C", [p[1], p[0], p0]))
+    return (segs[-1][2][-1] if segs else start), out
+
+
+def oriented(path):
+    """Contours re-oriented by nesting depth (outer clockwise, holes the
+    other way), so every renderer fills them the same with non-zero."""
+    cs = _contour_segs(path)
+    polys = []
+    for start, segs in cs:
+        pp = skia.Path(); pp.moveTo(*start)
+        for p0, cmd, p in segs:
+            q = [p0] + p
+            for k in range(1, 13):
+                t = k / 12
+                if cmd == "L":
+                    x_ = q[0][0] + (q[1][0] - q[0][0]) * t; y_ = q[0][1] + (q[1][1] - q[0][1]) * t
+                elif cmd == "Q":
+                    mt = 1 - t
+                    x_ = mt * mt * q[0][0] + 2 * mt * t * q[1][0] + t * t * q[2][0]
+                    y_ = mt * mt * q[0][1] + 2 * mt * t * q[1][1] + t * t * q[2][1]
+                else:
+                    mt = 1 - t
+                    x_ = mt ** 3 * q[0][0] + 3 * mt * mt * t * q[1][0] + 3 * mt * t * t * q[2][0] + t ** 3 * q[3][0]
+                    y_ = mt ** 3 * q[0][1] + 3 * mt * mt * t * q[1][1] + 3 * mt * t * t * q[2][1] + t ** 3 * q[3][1]
+                pp.lineTo(x_, y_)
+        pp.close()
+        polys.append(pp)
+    out = []
+    for i, (start, segs) in enumerate(cs):
+        if not segs:
+            continue
+        # a point just inside the contour: midpoint of the first segment nudged
+        x, y = start
+        depth = sum(1 for j, q in enumerate(polys) if j != i and q.contains(x + 0.01, y + 0.01))
+        a = _area(segs)
+        want_pos = depth % 2 == 0
+        if (a > 0) != want_pos:
+            start, segs = _reverse(start, segs)
+        out.append((start, segs))
+    return out
+
+
 def d(path, nd=1):
     out = []
-    for cmd, pts in segments(path):
-        out.append(cmd + " ".join(_f(c, nd) for q in pts for c in (q.x(), q.y())))
+    for start, segs in oriented(path):
+        out.append("M" + _f(start[0], nd) + " " + _f(start[1], nd))
+        for p0, cmd, p in segs:
+            out.append(cmd + " ".join(_f(c, nd) for q in p for c in q))
+        out.append("Z")
     return "".join(out)
 
 
